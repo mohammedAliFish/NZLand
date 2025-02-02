@@ -1,0 +1,6 @@
+@WNZland_HostAddress = http://localhost:5255
+
+GET {{WNZland_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
