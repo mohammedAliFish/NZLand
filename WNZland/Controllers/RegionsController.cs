@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WNZland.Data;
 using WNZland.Models.Domain;
 using WNZland.Models.DTO;
@@ -17,9 +18,9 @@ namespace WNZland.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var regions = dbContext.Regions.ToList();
+            var regions = await dbContext.Regions.ToListAsync ();
 
             var regionDto = new List<RegionDto>();
 
@@ -39,10 +40,10 @@ namespace WNZland.Controllers
 
         [HttpGet("{id:Guid}")]
 
-        public IActionResult GetById([FromRoute] Guid id)
+        public async  Task<IActionResult> GetById([FromRoute] Guid id)
         {
             // var region = dbContext.Regions.Find(id); or
-            var region = dbContext.Regions.FirstOrDefault(r => r.Id == id);
+            var region = await dbContext.Regions.FirstOrDefaultAsync(r => r.Id == id);
             if (region == null)
                 return NotFound();
             var regionDto = new RegionDto
@@ -52,12 +53,12 @@ namespace WNZland.Controllers
                 Code = region.Code,
                 RegionImageUrl = region.RegionImageUrl
             };
-            
-          
+
+
             return Ok(regionDto);
         }
         [HttpPost]
-        public IActionResult Create([FromBody] AddRegionRequestDto regionDto)
+        public async Task<IActionResult> Create([FromBody] AddRegionRequestDto regionDto)
         {
             var regionDomain = new Region
             {
@@ -65,8 +66,8 @@ namespace WNZland.Controllers
                 Code = regionDto.Code,
                 RegionImageUrl = regionDto.RegionImageUrl
             };
-            dbContext.Regions.Add(regionDomain);
-            dbContext.SaveChanges();
+            await dbContext.Regions.AddAsync(regionDomain);
+            await dbContext.SaveChangesAsync();
 
             var regionDtos = new RegionDto
             {
@@ -76,7 +77,47 @@ namespace WNZland.Controllers
                 RegionImageUrl = regionDomain.RegionImageUrl
             };
             return CreatedAtAction(nameof(GetById), new { id = regionDtos.Id }, regionDtos);
+
+        }
+
+
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
+        {
+            var regionDomainModel = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
+            if (regionDomainModel == null)
+                return NotFound();
+
+                regionDomainModel.Name = updateRegionRequestDto.Name;
+                regionDomainModel.Code = updateRegionRequestDto.Code;
+                regionDomainModel.RegionImageUrl = updateRegionRequestDto.RegionImageUrl;
+
+           await dbContext.SaveChangesAsync();
+
+            var regionDto = new RegionDto
+            {
+                Id = regionDomainModel.Id,
+                Name = regionDomainModel.Name,
+                Code = regionDomainModel.Code,
+                RegionImageUrl = regionDomainModel.RegionImageUrl
+            };
+
+            return Ok(regionDto);
     
+        }
+
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            var region = await dbContext.Regions.FirstOrDefaultAsync(x=>x.Id ==id);
+            if(region == null)
+            return NotFound();
+
+            dbContext.Regions.Remove(region);
+            await dbContext.SaveChangesAsync();
+            return Ok();
         }
     }
 }
