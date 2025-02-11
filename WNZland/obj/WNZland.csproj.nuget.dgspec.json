@@ -51,6 +51,10 @@
               "target": "Package",
               "version": "[6.6.2, )"
             },
+            "automapper": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
             "microsoft.entityframeworkcore.sqlserver": {
               "target": "Package",
               "version": "[9.0.1, )"

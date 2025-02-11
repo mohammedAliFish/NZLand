@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WNZland.Data;
 
@@ -11,9 +12,11 @@ using WNZland.Data;
 namespace WNZland.Migrations
 {
     [DbContext(typeof(WNZDbContext))]
-    partial class WNZDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250211185605_seedingComplete")]
+    partial class seedingComplete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

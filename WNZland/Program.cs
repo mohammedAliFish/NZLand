@@ -1,6 +1,8 @@
 
 using Microsoft.EntityFrameworkCore;
 using WNZland.Data;
+using WNZland.Mappings;
+using WNZland.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<WNZDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("myConnection")));
+
+builder.Services.AddScoped<IRegionRepository, SQLRegionRepositories>();
+builder.Services.AddScoped<IWalkRepository, SQLWalkRepository>();
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
