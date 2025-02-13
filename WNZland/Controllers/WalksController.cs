@@ -24,7 +24,47 @@ namespace WNZland.Controllers
 
            return Ok(mapper.Map<WalkDto>(walkDomain));
                
-
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var walks = await SQLRegionRepositories.GetAllAsync();
+            return Ok(mapper.Map<List<WalkDto>>(walks));
+        }
+
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            var walk = await SQLRegionRepositories.GetAsync(id);
+            return Ok(mapper.Map<WalkDto>(walk));
+        }
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateWalkRequestDto updateWalkRequestDto)
+        {
+            var walk = await SQLRegionRepositories.GetAsync(id); 
+            if (walk == null)
+            {
+                return NotFound();
+            }
+            mapper.Map(updateWalkRequestDto, walk);
+            await SQLRegionRepositories.UpdateAsync(walk);
+            return Ok(mapper.Map<WalkDto>(walk));
+        }
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            var walk = await SQLRegionRepositories.GetAsync(id);
+            if (walk == null)
+            {
+                return NotFound();
+            }
+            return Ok(mapper.Map<WalkDto>(await SQLRegionRepositories.DeleteAsync(id)));
+         
+        }
+
     }
 }
