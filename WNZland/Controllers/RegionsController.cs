@@ -1,7 +1,7 @@
 
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using WNZland.CustomActionFilters;
 using WNZland.Data;
 using WNZland.Models.Domain;
 using WNZland.Models.DTO;
@@ -29,7 +29,7 @@ namespace WNZland.Controllers
         {
             var regions = await regionRepository.GetAllAsync();
 
-           
+
             var regionDto = mapper.Map<List<RegionDto>>(regions);
 
             return Ok(regionDto);
@@ -39,7 +39,7 @@ namespace WNZland.Controllers
 
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
-            // var region = dbContext.Regions.Find(id); or
+            
             var region = await regionRepository.GetByIdAsync(id);
             if (region == null)
                 return NotFound();
@@ -49,30 +49,39 @@ namespace WNZland.Controllers
             return Ok(regionDto);
         }
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto regionDto)
         {
-            var regionDomain = mapper.Map<Region>(regionDto);
-            regionDomain = await regionRepository.CreateAsync(regionDomain);
+
+           
+                var regionDomain = mapper.Map<Region>(regionDto);
+                regionDomain = await regionRepository.CreateAsync(regionDomain);
 
 
-            var regionDtos = mapper.Map<RegionDto>(regionDomain);
-            return CreatedAtAction(nameof(GetById), new { id = regionDtos.Id }, regionDtos);
+                var regionDtos = mapper.Map<RegionDto>(regionDomain);
+                return CreatedAtAction(nameof(GetById), new { id = regionDtos.Id }, regionDtos);
+          
+
+
+
 
         }
 
 
         [HttpPut]
         [Route("{id:Guid}")]
+        [ValidateModel]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
-            var regionDomainModel = mapper.Map<Region>(updateRegionRequestDto);
-            regionDomainModel = await regionRepository.UpdateAsync(id, regionDomainModel);
-            if (regionDomainModel == null)
-                return NotFound();
-            var regionDto = mapper.Map<RegionDto>(regionDomainModel);
+            
+                var regionDomainModel = mapper.Map<Region>(updateRegionRequestDto);
+                regionDomainModel = await regionRepository.UpdateAsync(id, regionDomainModel);
+                if (regionDomainModel == null)
+                    return NotFound();
+                var regionDto = mapper.Map<RegionDto>(regionDomainModel);
 
-            return Ok(regionDto);
-
+                return Ok(regionDto);
+          
         }
 
         [HttpDelete]
@@ -82,9 +91,9 @@ namespace WNZland.Controllers
             var region = await regionRepository.DeleteAsync(id);
             if (region == null)
                 return NotFound();
- 
-            
-            
+
+
+
             return Ok();
         }
     }

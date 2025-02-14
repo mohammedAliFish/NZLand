@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using WNZland.CustomActionFilters;
 using WNZland.Models.Domain;
 using WNZland.Models.DTO;
 using WNZland.Repositories;
@@ -11,19 +12,23 @@ namespace WNZland.Controllers
     {
         private readonly IMapper mapper;
         private readonly IWalkRepository SQLRegionRepositories;
-        public WalksController(IMapper mapper , IWalkRepository SQLRegionRepositories)
+        public WalksController(IMapper mapper, IWalkRepository SQLRegionRepositories)
         {
             this.mapper = mapper;
             this.SQLRegionRepositories = SQLRegionRepositories;
         }
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> Create([FromBody] AddWalkRequestDto addWalkRequestDto)
         {
-           var walkDomain = mapper.Map<Walk>(addWalkRequestDto);
-           walkDomain = await SQLRegionRepositories.CreateAsync(walkDomain);
+          
+                var walkDomain = mapper.Map<Walk>(addWalkRequestDto);
+                walkDomain = await SQLRegionRepositories.CreateAsync(walkDomain);
 
-           return Ok(mapper.Map<WalkDto>(walkDomain));
-               
+                return Ok(mapper.Map<WalkDto>(walkDomain));
+          
+
+
         }
 
         [HttpGet]
@@ -44,14 +49,17 @@ namespace WNZland.Controllers
         [Route("{id:Guid}")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateWalkRequestDto updateWalkRequestDto)
         {
-            var walk = await SQLRegionRepositories.GetAsync(id); 
-            if (walk == null)
-            {
-                return NotFound();
-            }
-            mapper.Map(updateWalkRequestDto, walk);
-            await SQLRegionRepositories.UpdateAsync(walk);
-            return Ok(mapper.Map<WalkDto>(walk));
+            
+                var walk = await SQLRegionRepositories.GetAsync(id);
+                if (walk == null)
+                {
+                    return NotFound();
+                }
+                mapper.Map(updateWalkRequestDto, walk);
+                await SQLRegionRepositories.UpdateAsync(walk);
+                return Ok(mapper.Map<WalkDto>(walk));
+           
+
         }
         [HttpDelete]
         [Route("{id:Guid}")]
@@ -63,7 +71,7 @@ namespace WNZland.Controllers
                 return NotFound();
             }
             return Ok(mapper.Map<WalkDto>(await SQLRegionRepositories.DeleteAsync(id)));
-         
+
         }
 
     }
