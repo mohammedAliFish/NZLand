@@ -32,9 +32,9 @@ namespace WNZland.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] string? filterOn , [FromQuery] string? filterQuery)
         {
-            var walks = await SQLRegionRepositories.GetAllAsync();
+            var walks = await SQLRegionRepositories.GetAllAsync(filterOn,filterQuery);
             return Ok(mapper.Map<List<WalkDto>>(walks));
         }
 
