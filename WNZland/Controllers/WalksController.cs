@@ -32,9 +32,9 @@ namespace WNZland.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] string? filterOn , [FromQuery] string? filterQuery)
+        public async Task<IActionResult> GetAll([FromQuery] string? filterOn , [FromQuery] string? filterQuery, [FromQuery] string? sortBy , [FromQuery] bool? isAscending , [FromQuery] int pageNumber , [FromQuery] int pageSize)
         {
-            var walks = await SQLRegionRepositories.GetAllAsync(filterOn,filterQuery);
+            var walks = await SQLRegionRepositories.GetAllAsync(filterOn,filterQuery,sortBy,isAscending ?? true , pageNumber , pageSize );
             return Ok(mapper.Map<List<WalkDto>>(walks));
         }
 
