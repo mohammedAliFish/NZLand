@@ -1,5 +1,6 @@
 
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WNZland.CustomActionFilters;
 using WNZland.Data;
@@ -11,6 +12,7 @@ namespace WNZland.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RegionsController : ControllerBase
     {
         private readonly WNZDbContext dbContext;

@@ -48,8 +48,6 @@ public class SQLWalkRepository : IWalkRepository
     }
     public async Task<Walk> GetAsync(Guid id)
     {
-       
-
         return await dbContext.Walks.Include("Difficulty").Include("Region").FirstOrDefaultAsync(w => w.Id == id);
     }
     public async Task UpdateAsync(Walk walk)

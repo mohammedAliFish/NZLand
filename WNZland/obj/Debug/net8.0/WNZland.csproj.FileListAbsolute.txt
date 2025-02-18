@@ -169,3 +169,5 @@
 /Volumes/My Projects/apiCourse/WNZland/bin/Debug/net8.0/runtimes/win/lib/net6.0/System.Windows.Extensions.dll
 /Volumes/My Projects/apiCourse/WNZland/obj/Debug/net8.0/WNZland.sourcelink.json
 /Volumes/My Projects/apiCourse/WNZland/bin/Debug/net8.0/AutoMapper.dll
+/Volumes/My Projects/apiCourse/WNZland/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Volumes/My Projects/apiCourse/WNZland/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
