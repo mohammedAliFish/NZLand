@@ -1,7 +1,9 @@
 
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using WNZland.Data;
 using WNZland.Mappings;
@@ -14,10 +16,35 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<WNZDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("myConnection")));
+builder.Services.AddDbContext<NZWalksAuthDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("NZWalksAuthConnectionString")));
 
 builder.Services.AddScoped<IRegionRepository, SQLRegionRepositories>();
 builder.Services.AddScoped<IWalkRepository, SQLWalkRepository>();
+
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+
+
+
+builder.Services.AddIdentityCore<IdentityUser>()
+.AddRoles<IdentityRole>()
+.AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("WNZland")
+.AddEntityFrameworkStores<NZWalksAuthDbContext>()
+.AddDefaultTokenProviders();
+
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase=false;
+    options.Password.RequireNonAlphanumeric=false;
+    options.Password.RequireUppercase=false;
+    options.Password.RequiredLength=6;
+    options.Password.RequiredUniqueChars=1;
+});
+
+
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 .AddJwtBearer(options=>options.TokenValidationParameters = new TokenValidationParameters{
@@ -32,7 +59,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

@@ -4,7 +4,7 @@ namespace WNZland.Data;
 
 public class WNZDbContext : DbContext
 {
-    public WNZDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
+    public WNZDbContext(DbContextOptions<WNZDbContext> dbContextOptions) : base(dbContextOptions)
     {
     }
 
