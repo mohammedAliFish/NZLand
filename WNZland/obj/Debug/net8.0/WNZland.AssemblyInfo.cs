@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WNZland")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+feec028447c25675e9f1d8eb6f4b1af4275b288a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+caf41f5685c12fe21d241d81410a0d061e639495")]
 [assembly: System.Reflection.AssemblyProductAttribute("WNZland")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WNZland")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

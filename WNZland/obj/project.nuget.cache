@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "dgSpecHash": "qqLibE7mnF8=",
-  "success": true,
+  "dgSpecHash": "yluYUvKFW1Y=",
+  "success": false,
   "projectFilePath": "/Volumes/My Projects/apiCourse/WNZland/WNZland.csproj",
   "expectedPackageFiles": [
     "/Users/fish/.nuget/packages/automapper/13.0.1/automapper.13.0.1.nupkg.sha512",
@@ -47,7 +47,7 @@
     "/Users/fish/.nuget/packages/microsoft.identity.client/4.61.3/microsoft.identity.client.4.61.3.nupkg.sha512",
     "/Users/fish/.nuget/packages/microsoft.identity.client.extensions.msal/4.61.3/microsoft.identity.client.extensions.msal.4.61.3.nupkg.sha512",
     "/Users/fish/.nuget/packages/microsoft.identitymodel.abstractions/8.0.0/microsoft.identitymodel.abstractions.8.0.0.nupkg.sha512",
-    "/Users/fish/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.0.0/microsoft.identitymodel.jsonwebtokens.8.0.0.nupkg.sha512",
+    "/Users/fish/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.6.0/microsoft.identitymodel.jsonwebtokens.8.6.0.nupkg.sha512",
     "/Users/fish/.nuget/packages/microsoft.identitymodel.logging/8.0.0/microsoft.identitymodel.logging.8.0.0.nupkg.sha512",
     "/Users/fish/.nuget/packages/microsoft.identitymodel.protocols/7.0.3/microsoft.identitymodel.protocols.7.0.3.nupkg.sha512",
     "/Users/fish/.nuget/packages/microsoft.identitymodel.protocols.openidconnect/7.0.3/microsoft.identitymodel.protocols.openidconnect.7.0.3.nupkg.sha512",
@@ -93,5 +93,15 @@
     "/Users/fish/.nuget/packages/system.threading.tasks.extensions/4.5.4/system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "/Users/fish/.nuget/packages/system.windows.extensions/6.0.0/system.windows.extensions.6.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1605",
+      "level": "Error",
+      "message": "Warning As Error: Detected package downgrade: Microsoft.IdentityModel.Tokens from 8.6.0 to 8.0.0. Reference the package directly from the project to select a different version. \n WNZland -> Microsoft.IdentityModel.JsonWebTokens 8.6.0 -> Microsoft.IdentityModel.Tokens (>= 8.6.0) \n WNZland -> Microsoft.IdentityModel.Tokens (>= 8.0.0)",
+      "libraryId": "Microsoft.IdentityModel.Tokens",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }
