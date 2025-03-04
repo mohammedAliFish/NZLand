@@ -12,7 +12,7 @@ namespace WNZland.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    
     public class RegionsController : ControllerBase
     {
         private readonly WNZDbContext dbContext;
@@ -27,6 +27,8 @@ namespace WNZland.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+        [Authorize (Roles = "Reader")]
         public async Task<IActionResult> GetAll()
         {
             var regions = await regionRepository.GetAllAsync();
@@ -38,7 +40,7 @@ namespace WNZland.Controllers
         }
 
         [HttpGet("{id:Guid}")]
-
+         [Authorize (Roles = "Reader")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             
@@ -52,6 +54,7 @@ namespace WNZland.Controllers
         }
         [HttpPost]
         [ValidateModel]
+         [Authorize (Roles = "Writer")]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto regionDto)
         {
 
@@ -73,7 +76,7 @@ namespace WNZland.Controllers
         [HttpPut]
         [Route("{id:Guid}")]
         [ValidateModel]
-        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
+        [Authorize]        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
             
                 var regionDomainModel = mapper.Map<Region>(updateRegionRequestDto);
@@ -88,6 +91,7 @@ namespace WNZland.Controllers
 
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var region = await regionRepository.DeleteAsync(id);

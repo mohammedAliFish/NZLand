@@ -171,3 +171,4 @@
 /Volumes/My Projects/apiCourse/WNZland/bin/Debug/net8.0/AutoMapper.dll
 /Volumes/My Projects/apiCourse/WNZland/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
 /Volumes/My Projects/apiCourse/WNZland/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+/Volumes/My Projects/apiCourse/WNZland/bin/Debug/net8.0/Microsoft.Bcl.Memory.dll
